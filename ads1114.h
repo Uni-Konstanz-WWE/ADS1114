@@ -1,6 +1,7 @@
-
 #ifndef ADS114_H
 #define ADS114_H
+
+#include "driver/i2c.h"
 
 #define I2C_MASTER_SCL_IO           3                           /*!< GPIO number used for I2C master clock */
 #define I2C_MASTER_SDA_IO           5                           /*!< GPIO number used for I2C master data  */
@@ -12,14 +13,18 @@
 #define ADS1114_ADDR                0x48    
 
 
-class ADS1114{
-    public:
-        int read(void);
-        int init(void);
+class ADS1114 {
+  public:
+    ADS1114 (i2c_port_t port, uint8_t address=0);
+    int read(void);
+    int init(void);
 
-    private:
-        int setDataRegister(void);
-        int i2c_master_init(void);
+  private:
+    int setDataRegister(void);
+
+    i2c_port_t port; ///< I2C-Interface Port
+    uint8_t address; ///< I2C-Address of the sensor
+    int i2c_timeout_ms = 100; ///< I2C Timeout in ms
 
 
 };
