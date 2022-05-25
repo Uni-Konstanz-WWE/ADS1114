@@ -2,6 +2,7 @@
 #define ADS114_H
 
 #include "driver/i2c.h"
+#include "adcbase.h"
 
 #define I2C_MASTER_SCL_IO           3                           /*!< GPIO number used for I2C master clock */
 #define I2C_MASTER_SDA_IO           5                           /*!< GPIO number used for I2C master data  */
@@ -13,10 +14,10 @@
 #define ADS1114_ADDR                0x48    
 
 
-class ADS1114 {
+class ADS1114 : public ADCBase {
   public:
     ADS1114 (i2c_port_t port, uint8_t address=0);
-    int read(void);
+    int read(void) override;
     int init(void);
 
   private:
