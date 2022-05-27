@@ -24,10 +24,10 @@ int ADS1114::setDataRegister(void)
 }
 
 
-int ADS1114::read(void) {   
+ADCReading ADS1114::read(void) {   
   setDataRegister();
 
-  int data=0;
+  ADCReading reading;
   uint8_t data1, data0;
   i2c_cmd_handle_t cmd = i2c_cmd_link_create();
   i2c_master_start(cmd);
@@ -38,8 +38,9 @@ int ADS1114::read(void) {
   i2c_master_cmd_begin(port, cmd, i2c_timeout_ms / portTICK_RATE_MS);
   i2c_cmd_link_delete(cmd);
 
-  data = (int)data0+(int)(data1<<8);
-  return data;
+  reading.value = (int)data0+(int)(data1<<8);
+  reading.good = true;
+  return reading;
 }
 
 

@@ -17,7 +17,7 @@
 class ADS1114 : public ADCBase {
   public:
     ADS1114 (i2c_port_t port, uint8_t address=0);
-    int read(void) override;
+    ADCReading read(void) override;
     int init(void);
 
   private:
