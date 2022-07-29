@@ -38,7 +38,7 @@ ADCReading ADS1114::read(void) {
   i2c_master_cmd_begin(port, cmd, i2c_timeout_ms / portTICK_RATE_MS);
   i2c_cmd_link_delete(cmd);
 
-  reading.value = (int)data0+(int)(data1<<8);
+  reading.value1 = (int)data0+(int)(data1<<8);
   reading.good = true;
   return reading;
 }
