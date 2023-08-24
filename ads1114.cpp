@@ -18,7 +18,7 @@ int ADS1114::setDataRegister(void)
   i2c_master_write_byte(cmd,0x90,I2C_MASTER_ACK);
   i2c_master_write_byte(cmd,0x00,I2C_MASTER_ACK);
   i2c_master_stop(cmd); 
-  i2c_master_cmd_begin(port, cmd, i2c_timeout_ms / portTICK_RATE_MS);
+  i2c_master_cmd_begin(port, cmd, i2c_timeout_ms * portTICK_PERIOD_MS);
   i2c_cmd_link_delete(cmd);
   return 0;
 }
@@ -35,7 +35,7 @@ ADCReading ADS1114::read(void) {
   i2c_master_read_byte(cmd,&data1,I2C_MASTER_ACK);
   i2c_master_read_byte(cmd,&data0,I2C_MASTER_ACK);
   i2c_master_stop(cmd); 
-  i2c_master_cmd_begin(port, cmd, i2c_timeout_ms / portTICK_RATE_MS);
+  i2c_master_cmd_begin(port, cmd, i2c_timeout_ms * portTICK_PERIOD_MS);
   i2c_cmd_link_delete(cmd);
 
   reading.value1 = (int)data0+(int)(data1<<8);
@@ -53,7 +53,7 @@ int ADS1114::init(void) {
   i2c_master_write_byte(cmd,0x8E,I2C_MASTER_ACK);
   i2c_master_write_byte(cmd,0x43,I2C_MASTER_ACK);
   i2c_master_stop(cmd); 
-  i2c_master_cmd_begin(I2C_NUM_0,cmd,1000 / portTICK_RATE_MS);
+  i2c_master_cmd_begin(I2C_NUM_0,cmd,1000 * portTICK_PERIOD_MS);
   i2c_cmd_link_delete(cmd);
   return 0;
 }
